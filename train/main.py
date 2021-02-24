@@ -6,7 +6,6 @@ import torch.optim as optim
 import torch.utils.data
 from torchvision import datasets
 from torchvision import transforms
-from models.model import CNNModel
 import numpy as np
 
 
@@ -20,6 +19,7 @@ abs_current_path = os.path.realpath('./')
 root_path = os.path.join('/', *abs_current_path.split(os.path.sep)[:-1])
 add_path(root_path)
 
+from models.model import CNNModel
 from dataset.data_loader import GetLoader
 from train.test import test
 
