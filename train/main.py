@@ -1,13 +1,26 @@
 import random
 import os
+import sys
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
 import torch.utils.data
-from dataset.data_loader import GetLoader
 from torchvision import datasets
 from torchvision import transforms
 from models.model import CNNModel
 import numpy as np
+
+
+def add_path(path):
+    if path not in sys.path:
+        print('Adding {}'.format(path))
+        sys.path.append(path)
+
+
+abs_current_path = os.path.realpath('./')
+root_path = os.path.join('/', *abs_current_path.split(os.path.sep)[:-1])
+add_path(root_path)
+
+from dataset.data_loader import GetLoader
 from train.test import test
 
 source_dataset_name = 'MNIST'
@@ -158,4 +171,3 @@ for epoch in range(n_epoch):
     torch.save(my_net, '{0}/mnist_mnistm_model_epoch_{1}.pth'.format(model_root, epoch))
     test(source_dataset_name, epoch)
     test(target_dataset_name, epoch)
-
