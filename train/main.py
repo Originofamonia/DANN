@@ -8,7 +8,7 @@ from torchvision import datasets
 from torchvision import transforms
 from models.model import CNNModel
 import numpy as np
-from test import test
+from train.test import test
 
 source_dataset_name = 'MNIST'
 target_dataset_name = 'mnist_m'
@@ -88,7 +88,7 @@ for p in my_net.parameters():
 
 # training
 
-for epoch in xrange(n_epoch):
+for epoch in range(n_epoch):
 
     len_dataloader = min(len(dataloader_source), len(dataloader_target))
     data_source_iter = iter(dataloader_source)
@@ -151,12 +151,11 @@ for epoch in xrange(n_epoch):
 
         i += 1
 
-        print 'epoch: %d, [iter: %d / all %d], err_s_label: %f, err_s_domain: %f, err_t_domain: %f' \
+        print('epoch: %d, [iter: %d / all %d], err_s_label: %f, err_s_domain: %f, err_t_domain: %f' \
               % (epoch, i, len_dataloader, err_s_label.cpu().data.numpy(),
-                 err_s_domain.cpu().data.numpy(), err_t_domain.cpu().data.numpy())
+                 err_s_domain.cpu().data.numpy(), err_t_domain.cpu().data.numpy()))
 
     torch.save(my_net, '{0}/mnist_mnistm_model_epoch_{1}.pth'.format(model_root, epoch))
     test(source_dataset_name, epoch)
     test(target_dataset_name, epoch)
 
-print 'done'
